@@ -1,4 +1,4 @@
-.PHONY: env up pull update init
+.PHONY: env up pull update init down
 
 ifeq ($(shell test -e '.env' && echo -n yes), yes)
 	include .env
@@ -23,6 +23,10 @@ pull:
 ## Up docker containers
 up:
 	docker compose up --force-recreate --remove-orphans -d
+
+## Down docker containers
+down:
+	docker compose down
 
 ## Pull & up containers
 update:
