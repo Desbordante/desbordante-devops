@@ -6,7 +6,7 @@
 make init
 ```
 
-**Don't forget to change values in .env**
+### Don't forget to change values in .env
 
 ## Commands
 
