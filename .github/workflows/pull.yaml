@@ -1,4 +1,4 @@
-name: Pull the git repository on the server
+name: Pull
 on:
   push:
     branches:
