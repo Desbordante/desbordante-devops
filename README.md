@@ -81,8 +81,61 @@ This command will provide you with the password needed to log in.
 
 ### Note on Changes in Core Directory
 
-If you make changes to files in the `core` directory, you need to rerun the `start` command to apply the new
+If you make changes to files in the `core` directory, you need to rerun the `make start` command to apply the new
 configurations.
+
+## Setting Up GitHub SSO Authentication for ArgoCD Admin Panel
+
+To configure GitHub Single Sign-On (SSO) for the ArgoCD admin panel, follow these steps:
+
+### 1. Create a GitHub OAuth Application
+
+1. Go to your GitHub organization settings.
+2. Navigate to **Developer Settings** > **OAuth Apps**.
+3. Create a new OAuth app for ArgoCD with the following settings:
+  - **Homepage URL**: `https://argo.*STAGE_DOMAIN*`  
+    (e.g., https://argo.desbordemo.store)
+  - **Callback URL**: `https://argo.*STAGE_DOMAIN*/api/dex/callback`  
+    (e.g., https://argo.desbordemo.store/api/dex/callback)
+4. Once created, you will receive a **Client ID** and **Client Secret**.
+
+### 2. Configure the `.env` File
+
+In your `.env` file, configure the following environment variables:
+
+```bash
+AUTH_CLIENT_ID=Ov23lixhGS2hUUAElazH  # OAuth app client ID
+AUTH_CLIENT_SECRET=secret123456        # OAuth app client secret
+AUTH_ORG=Desbordante                  # Organization name (CASE SENSITIVE!)
+```
+
+- Make sure the **organization name** is entered exactly as it appears on GitHub, as it is case-sensitive (`desbordante` ≠ `Desbordante`).
+
+### 3. Set Up Access for the `devops` Team
+
+Within your GitHub organization, create a team named `devops`. The members of this team will have access to manage applications, projects, repositories, and other settings within ArgoCD.
+
+### 4. Start ArgoCD with SSO Enabled
+
+Run the following command to start ArgoCD with GitHub SSO enabled:
+
+```bash
+make start
+```
+
+### 5. Restarting Services
+
+- To restart the ArgoCD server:
+```bash
+kubectl rollout restart deploy argocd-server -n argocd
+```
+
+- To restart the DEX server:
+```bash
+kubectl rollout restart deployment argocd-dex-server -n argocd
+```
+
+These commands will apply the new configuration and ensure that the ArgoCD and DEX services are restarted with the updated settings.
 
 ## Useful Commands
 

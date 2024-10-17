@@ -111,7 +111,7 @@ install_image_updater:
 initial_password:
 	@echo $(BLUE)"Retrieving initial ArgoCD admin password..."$(NC)
 	@kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
-	@echo $(BLUE)"Initial ArgoCD admin password retrieved."$(NC)
+	@echo $(BLUE)"\nInitial ArgoCD admin password retrieved."$(NC)
 
 ## Install all components
 install:
