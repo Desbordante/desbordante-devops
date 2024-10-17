@@ -1,0 +1,25 @@
+autoUpdate: true
+image:
+  name: ghcr.io/desbordante/desbordante-server
+  tag: 0.1.0
+subdomain: api
+port: 8000
+env:
+  POSTGRES_DIALECT_DRIVER: postgresql+psycopg
+  POSTGRES_USER: postgres
+  POSTGRES_HOST: postgres-stage-service
+  POSTGRES_DB: db
+  POSTGRES_PORT: 5432
+  RABBITMQ_DEFAULT_USER: guest
+  RABBITMQ_HOST: rabbitmq-stage-service
+  RABBITMQ_PORT: 5672
+  UPLOADED_FILES_DIR_PATH: /uploads
+secrets:
+  postgres-secret:
+    POSTGRES_PASSWORD: password
+  rabbitmq-secret:
+    RABBITMQ_DEFAULT_PASSWORD: password
+  backend-secret:
+    SECRET_KEY: password
+volume:
+  mountPath: /uploads

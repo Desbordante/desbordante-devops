@@ -1,0 +1,4 @@
+image:
+  name: nginx
+  tag: latest
+port: 80

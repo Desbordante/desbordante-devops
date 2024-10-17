@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+  labels:
+    app: {{ .Release.Name }}-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      project: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        project: {{ .Release.Name }}
+    spec:
+      {{- if .Values.volume }}
+      volumes:
+        - name: {{ .Release.Name }}-volume
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-volume-claim
+      {{- end }}
+      containers:
+        - name: {{ .Release.Name }}-container
+          image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
+          imagePullPolicy: IfNotPresent
+          env:
+          {{- include "helpers.list-env-variables" . | indent 12 }}
+          ports:
+          {{- range $host, $port := default (dict .Values.host .Values.port) .Values.hosts }}
+            - containerPort: {{ $port }}
+          {{- end }}
+          {{- if .Values.volume }}
+          volumeMounts:
+            - name: {{ .Release.Name }}-volume
+              mountPath: {{ .Values.volume.mountPath }}
+          {{- end }}
+      imagePullSecrets:
+        - name: regcred

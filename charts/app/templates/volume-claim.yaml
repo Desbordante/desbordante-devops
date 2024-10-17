@@ -1,0 +1,13 @@
+{{- if .Values.volume }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-volume-claim
+spec:
+  storageClassName: {{ .Release.Name }}-storage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ default "1Gi" .Values.volume.storage }}
+{{- end }}

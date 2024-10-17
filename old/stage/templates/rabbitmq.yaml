@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rabbitmq-{{ .Values.env }}
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: {{ .Values.env }}
+    server: https://kubernetes.default.svc
+  source:
+    path: "charts/app"
+    repoURL: {{ .Values.repo }}
+    targetRevision: {{ .Values.branch }}
+    helm:
+      values: |
+        ingress: false
+        image:
+          name: rabbitmq
+          tag: 3.12-management-alpine
+        host: "{{ .Values.domain }}"
+        port: 5672
+        env:
+          RABBITMQ_DEFAULT_USER: guest
+        secrets:
+          rabbitmq-secret:
+            RABBITMQ_DEFAULT_PASS: password
+        volume:
+          path: {{ .Values.dir }}/volumes/{{ .Values.env }}/rabbitmq
+          mountPath: /var/lib/rabbitmq
+          storage: 1Gi
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

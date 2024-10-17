@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: postgres-{{ .Values.env }}
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: {{ .Values.env }}
+    server: https://kubernetes.default.svc
+  source:
+    path: "charts/app"
+    repoURL: {{ .Values.repo }}
+    targetRevision: {{ .Values.branch }}
+    helm:
+      values: |
+        ingress: false
+        image:
+          name: postgres
+          tag: 16.0-alpine
+        host: "db.{{ .Values.domain }}"
+        port: 5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: db
+        secrets:
+          postgres-secret:
+            POSTGRES_PASSWORD: password
+        volume:
+          path: {{ .Values.dir }}/volumes/{{ .Values.env }}/postgres
+          mountPath: /var/lib/postgresql/data
+          storage: 2Gi
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

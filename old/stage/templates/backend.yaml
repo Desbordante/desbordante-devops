@@ -1,0 +1,53 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: backend-{{ .Values.env }}
+  namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: image=ghcr.io/desbordante/desbordante-server
+    argocd-image-updater.argoproj.io/image.update-strategy: newest-build
+    argocd-image-updater.argoproj.io/myimage.allow-tags: regexp:^[0-9a-f]{7}$
+    argocd-image-updater.argoproj.io/write-back-method: git:repocreds
+    argocd-image-updater.argoproj.io/git-branch: {{ .Values.branch }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: {{ .Values.env }}
+    server: https://kubernetes.default.svc
+  source:
+    path: "charts/app"
+    repoURL: {{ .Values.repo }}
+    targetRevision: {{ .Values.branch }}
+    helm:
+      values: |
+        host: "api.{{ .Values.domain }}"
+        port: 8000
+        env:
+          POSTGRES_DIALECT_DRIVER: postgresql+psycopg
+          POSTGRES_USER: postgres
+          POSTGRES_HOST: postgres-{{ .Values.env }}-service
+          POSTGRES_DB: db
+          POSTGRES_PORT: 5432
+          RABBITMQ_DEFAULT_USER: guest
+          RABBITMQ_HOST: rabbitmq-{{ .Values.env }}-service
+          RABBITMQ_PORT: 5672
+          UPLOADED_FILES_DIR_PATH: /uploads
+        secrets:
+          postgres-secret:
+            POSTGRES_PASSWORD: password
+          rabbitmq-secret:
+            RABBITMQ_DEFAULT_PASSWORD: password
+          backend-secret:
+            SECRET_KEY: password
+        volume:
+          path: {{ .Values.dir }}/volumes/{{ .Values.env }}/backend
+          mountPath: /uploads
+          storage: 1Gi
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

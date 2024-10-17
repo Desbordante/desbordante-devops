@@ -1,0 +1,14 @@
+ingress: false
+image:
+  name: postgres
+  tag: 16.0-alpine
+port: 5432
+env:
+  POSTGRES_USER: postgres
+  POSTGRES_DB: db
+secrets:
+  postgres-secret:
+    POSTGRES_PASSWORD: password
+volume:
+  mountPath: /var/lib/postgresql/data
+  storage: 2Gi

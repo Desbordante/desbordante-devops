@@ -1,0 +1,22 @@
+{{- if .Values.volume }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Release.Name }}-volume
+spec:
+  storageClassName: {{ .Release.Name }}-storage
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: {{ default "1Gi" .Values.volume.storage }}
+  local:
+    path: {{ default "/mnt/volumes/{{ .Release.Name }}" .Values.volume.path }}
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - node
+{{- end }}

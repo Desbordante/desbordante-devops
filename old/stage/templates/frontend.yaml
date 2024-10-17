@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: frontend-{{ .Values.env }}
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: {{ .Values.env }}
+    server: https://kubernetes.default.svc
+  source:
+    path: "charts/app"
+    repoURL: {{ .Values.repo }}
+    targetRevision: {{ .Values.branch }}
+    helm:
+      values: |
+        ingress: true
+        image:
+          name: nginx
+          tag: latest
+        host: "{{ .Values.domain }}"
+        port: 80
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

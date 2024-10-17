@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: root
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: [ "missingkey=error" ]
+  generators:
+    - list:
+        elements:
+          - env: stage
+          - env: prod
+  template:
+    metadata:
+      name: "root-{{ .env }}"
+      namespace: argocd
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
+    spec:
+      project: default
+      source:
+        path: "{{ .env }}"
+        repoURL: $SSH_REPO_URL
+        targetRevision: $REPO_BRANCH
+        helm:
+          values: |
+            repo: $SSH_REPO_URL
+            branch: $REPO_BRANCH
+            domain: {{ ternary "$STAGE_DOMAIN" "$PROD_DOMAIN" (eq .env "stage") }}
+            dir: $PROJECT_DIR
+            env: "{{ .env }}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: argocd
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
