@@ -103,4 +103,14 @@ argocd account update-password --account admin --current-password "$(make initia
 kubectl describe applicationset root -n argocd
 ```
 
+- To restart ArgoCD server
+```bash
+kubectl rollout restart deploy argocd-server -n argocd
+```
+
+- To restart DEX server
+```bash
+kubectl rollout restart deployment argocd-dex-server -n argocd
+```
+
 This setup has been tested on **Ubuntu 24.04**.
