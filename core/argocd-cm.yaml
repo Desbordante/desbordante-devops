@@ -7,6 +7,18 @@ metadata:
     app.kubernetes.io/name: argocd-cm
     app.kubernetes.io/part-of: argocd
 data:
+  url: "https://argo.$STAGE_DOMAIN"
+  dex.config: |
+    connectors:
+      # GitHub example
+      - type: github
+        id: github
+        name: GitHub
+        config:
+          clientID: $AUTH_CLIENT_ID
+          clientSecret: $AUTH_CLIENT_SECRET # Alternatively $<some_K8S_secret>:dex.github.clientSecret
+          orgs:
+          - name: $AUTH_ORG
   resource.customizations: |
     extensions/Ingress:
       health.lua: |
