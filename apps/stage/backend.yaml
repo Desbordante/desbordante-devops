@@ -23,3 +23,4 @@ secrets:
     SECRET_KEY: password
 volume:
   mountPath: /uploads
+  mode: ReadWriteMany

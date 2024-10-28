@@ -6,7 +6,7 @@ metadata:
 spec:
   storageClassName: {{ .Release.Name }}-storage
   accessModes:
-    - ReadWriteOnce
+    - {{ default "ReadWriteOnce" .Values.volume.mode }}
   resources:
     requests:
       storage: {{ default "1Gi" .Values.volume.storage }}
