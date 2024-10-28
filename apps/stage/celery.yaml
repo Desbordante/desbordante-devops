@@ -22,6 +22,3 @@ secrets:
     RABBITMQ_DEFAULT_PASSWORD: password
   backend-secret:
     SECRET_KEY: password
-volume:
-  claimName: backend-stage
-  mountPath: /uploads
