@@ -166,4 +166,10 @@ kubectl rollout restart deploy argocd-server -n argocd
 kubectl rollout restart deployment argocd-dex-server -n argocd
 ```
 
+## License
+
+Distributed under the GNU AGPL v3.
+See [LICENSE](LICENSE) for more information.
+
+
 This setup has been tested on **Ubuntu 24.04**.
