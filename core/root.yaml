@@ -76,7 +76,7 @@ spec:
             {{ toYaml .volume | indent 2 }}
             {{- end }}
             {{- if hasKey . "command" }}
-            command: .command
+            command: {{ .command }}
             {{- end }}
       project: default
       syncPolicy:
