@@ -1,4 +1,4 @@
-{{- if .Values.volume }}
+{{- if and .Values.volume (not .Values.volume.claimName) }}
 apiVersion: v1
 kind: PersistentVolume
 metadata:

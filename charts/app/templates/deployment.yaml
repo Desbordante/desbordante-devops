@@ -18,7 +18,7 @@ spec:
       volumes:
         - name: {{ .Release.Name }}-volume
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-volume-claim
+            claimName: {{ default .Release.Name .Values.volume.claimName }}-volume-claim
       {{- end }}
       containers:
         - name: {{ .Release.Name }}-container
