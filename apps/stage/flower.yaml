@@ -25,4 +25,5 @@ secrets:
   backend-secret:
     SECRET_KEY: password
 volume:
+  claimName: backend-stage
   mountPath: /uploads
