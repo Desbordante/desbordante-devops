@@ -39,6 +39,11 @@ down:
 update:
 	make pull up
 
+## Up docker containers in dev mode
+dev:
+	(trap 'docker compose down' INT; \
+	docker compose up --force-recreate --remove-orphans)
+
 .DEFAULT_GOAL := help
 # See <https://gist.github.com/klmr/575726c7e05d8780505a> for explanation.
 help:
