@@ -2,7 +2,6 @@ name: desbordante
 
 services:
   postgres:
-#    container_name: ${COMPOSE_PROJECT_NAME}-postgres
     image: postgres:16.0-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -16,7 +15,7 @@ services:
   rabbitmq:
     image: rabbitmq:3.12-management-alpine
     volumes:
-      - rabbit_data:/var/lib/rabbitmq
+      - rabbitmq_data:/var/lib/rabbitmq
     environment:
       - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASSWORD}
@@ -24,7 +23,7 @@ services:
       - "${RABBITMQ_PORT}:5672"
 
   backend:
-    image: ${BACKEND_IMAGE}
+    image: ghcr.io/desbordante/desbordante-server:${BACKEND_IMAGE_TAG}
     volumes:
       - ./volumes/uploads:${UPLOADED_FILES_DIR_PATH}
     env_file:
@@ -35,16 +34,35 @@ services:
     restart: always
     ports:
       - "${BACKEND_PORT}:8000"
-    deploy:
-      mode: replicated
-      replicas: 1
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:${BACKEND_PORT}/ping" ]
-      interval: 10s
-      timeout: 10s
-      retries: 3
-      start_period: 15s
+
+  celery:
+    image: ghcr.io/desbordante/desbordante-server:${BACKEND_IMAGE_TAG}
+    command: /celery
+    volumes:
+      - ./volumes/uploads:${UPLOADED_FILES_DIR_PATH}
+    env_file:
+      - .env
+    depends_on:
+      - rabbitmq
+    restart: always
+
+  flower:
+    image: ghcr.io/desbordante/desbordante-server:${BACKEND_IMAGE_TAG}
+    command: /flower
+    volumes:
+      - ./volumes/uploads:${UPLOADED_FILES_DIR_PATH}
+    env_file:
+      - .env
+    environment:
+      - FLOWER_USER=admin
+      - FLOWER_PASSWORD=admin
+    depends_on:
+      - rabbitmq
+      - celery
+    restart: always
+    ports:
+      - "5555:5555"
 
 volumes:
   postgres_data:
-  rabbit_data:
+  rabbitmq_data:

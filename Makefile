@@ -12,9 +12,16 @@ env:
 	@echo >> .env
 	@echo "SECRET_KEY=$$(openssl rand -hex 32)" >> .env
 
+## Create folders for volumes
+volumes:
+	@for volume in postgres rabbitmq uploads; do \
+    	mkdir -p ./volumes/$$volume; \
+    	chmod 777 ./volumes/$$volume; \
+    done
+
 ## Initiate repository
 init:
-	make env
+	make env volumes
 
 ## Pull docker containers
 pull:
