@@ -26,7 +26,7 @@ spec:
         argocd-image-updater.argoproj.io/image-list: image={{ .image.name }}
         {{- if eq .values.env "stage" }}
         argocd-image-updater.argoproj.io/image.update-strategy: newest-build
-        argocd-image-updater.argoproj.io/myimage.allow-tags: regexp:^[0-9a-f]{7}$
+        argocd-image-updater.argoproj.io/image.allow-tags: regexp:^[0-9a-f]{7}$
         {{- end }}
         {{- if eq .values.env "prod" }}
         argocd-image-updater.argoproj.io/image.update-strategy: semver

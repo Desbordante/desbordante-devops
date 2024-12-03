@@ -16,8 +16,9 @@ env:
   RABBITMQ_PORT: 5672
   UPLOADED_FILES_DIR_PATH: /uploads
   FLOWER_USER: admin
-  FLOWER_PASSWORD: admin
 secrets:
+  flower-secret:
+    FLOWER_PASSWORD: password
   postgres-secret:
     POSTGRES_PASSWORD: password
   rabbitmq-secret:
