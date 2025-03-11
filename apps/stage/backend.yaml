@@ -5,7 +5,6 @@ image:
 subdomain: api
 port: 8000
 env:
-  POSTGRES_DIALECT_DRIVER: postgresql+psycopg
   POSTGRES_USER: postgres
   POSTGRES_HOST: postgres-stage-service
   POSTGRES_DB: db
@@ -13,14 +12,15 @@ env:
   RABBITMQ_DEFAULT_USER: guest
   RABBITMQ_HOST: rabbitmq-stage-service
   RABBITMQ_PORT: 5672
-  UPLOADED_FILES_DIR_PATH: /uploads
+  MINIO_ROOT_USER: admin
+  MINIO_ROOT_PASSWORD: admin12345
+  MINIO_DEFAULT_BUCKETS: bucket:public
+  MINIO_HOST: minio-stage-service
+  MINIO_PORT: 9000
 secrets:
   postgres-secret:
     POSTGRES_PASSWORD: password
   rabbitmq-secret:
-    RABBITMQ_DEFAULT_PASSWORD: password
+    RABBITMQ_DEFAULT_PASS: password
   backend-secret:
     SECRET_KEY: password
-volume:
-  mountPath: /uploads
-  mode: ReadWriteMany
