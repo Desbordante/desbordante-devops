@@ -1,0 +1,12 @@
+autoUpdate: true
+image:
+  name: bitnami/minio
+  tag: 2025.2.18-debian-12-r2
+subdomain: s3
+port: 9000
+env:
+  MINIO_ROOT_USER: admin
+  MINIO_DEFAULT_BUCKETS: bucket:public
+secrets:
+  minio-secret:
+    MINIO_ROOT_PASSWORD: password
