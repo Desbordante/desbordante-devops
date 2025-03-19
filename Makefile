@@ -130,7 +130,10 @@ start:
 	@echo $(BLUE)"Running volumes and secrets setup..."$(NC)
 	-make volumes secrets
 	@echo $(BLUE)"Applying configurations from ./core directory..."$(NC)
-	@for file in ./core/*; do envsubst < "$$file" | kubectl apply -f -; done
+	@env_vars=$$(cat .env | cut -d= -f1 | sed 's/^/\$$/'); \
+	for file in ./core/*; do \
+		envsubst "$${env_vars}" < "$$file" | kubectl apply -f -; \
+	done
 	@echo $(BLUE)"Setup completed."$(NC)
 
 .DEFAULT_GOAL := help
