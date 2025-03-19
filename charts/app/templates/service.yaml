@@ -8,7 +8,7 @@ spec:
   selector:
     project: {{ .Release.Name }}    # Selecting PODS with those Labels
   ports:
-  {{- range $host, $port := default (dict .Values.host .Values.port) .Values.hosts }}
+  {{- range $host, $port := .Values.hosts }}
     - name: {{ $port }}-port
       port: {{ $port }}  # Port on Load Balancer
       targetPort: {{ $port }}  # Port on POD

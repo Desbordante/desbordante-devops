@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  {{- range $host, $port := default (dict .Values.host .Values.port) .Values.hosts }}
+  {{- range $host, $port := .Values.hosts }}
     - host: {{ $host }}
       http:
         paths:

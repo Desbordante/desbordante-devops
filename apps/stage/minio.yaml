@@ -1,8 +1,9 @@
 image:
   name: bitnami/minio
   tag: 2025.2.18-debian-12-r2
-subdomain: s3
-port: 9000
+ports:
+  s3: 9000
+  storage: 9001
 env:
   MINIO_ROOT_USER: admin
   MINIO_DEFAULT_BUCKETS: bucket:public

@@ -55,13 +55,16 @@ spec:
             image:
             {{ toYaml .image | indent 2 }}
             {{- end }}
-            host:
-            {{- if hasKey . "subdomain" }}
-              {{ .subdomain }}.{{ .values.domain }}
-            {{- else }}
-              {{ .values.domain }}
+            hosts:
+            {{- if hasKey . "ports" }}
+              {{- range $key, $port := .ports }}
+              {{ printf "%s.%s" $key $.values.domain }}: {{ $port }}
+              {{- end }}
+            {{- else if hasKey . "subdomain" }}
+              {{ .subdomain }}.{{ .values.domain }}: {{ .port }}
+            {{- else if hasKey . "port" }}
+              {{ .values.domain }}: {{ .port }}
             {{- end }}
-            port: {{ .port }}
             {{- if hasKey . "env" }}
             env:
             {{ toYaml .env | indent 2 }}

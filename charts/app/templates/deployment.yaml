@@ -30,7 +30,7 @@ spec:
           env:
           {{- include "helpers.list-env-variables" . | indent 12 }}
           ports:
-          {{- range $host, $port := default (dict .Values.host .Values.port) .Values.hosts }}
+          {{- range $host, $port := .Values.hosts }}
             - containerPort: {{ $port }}
           {{- end }}
           {{- if .Values.volume }}
