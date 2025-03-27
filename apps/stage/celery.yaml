@@ -22,5 +22,7 @@ secrets:
     POSTGRES_PASSWORD: password
   rabbitmq-secret:
     RABBITMQ_DEFAULT_PASS: password
+  backend-secret:
+    SECRET_KEY: password
   minio-secret:
     MINIO_ROOT_PASSWORD: password
