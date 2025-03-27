@@ -81,6 +81,9 @@ spec:
             {{- if hasKey . "command" }}
             command: {{ .command }}
             {{- end }}
+            {{- if hasKey . "args" }}
+            args: {{ .args }}
+            {{- end }}
       project: default
       syncPolicy:
         automated:

@@ -27,6 +27,9 @@ spec:
           {{- if .Values.command }}
           command: ["{{ .Values.command }}"]
           {{- end }}
+          {{- if .Values.args }}
+          args: ["{{ .Values.args }}"]
+          {{- end }}
           env:
           {{- include "helpers.list-env-variables" . | indent 12 }}
           ports:
