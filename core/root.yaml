@@ -82,7 +82,8 @@ spec:
             command: {{ .command }}
             {{- end }}
             {{- if hasKey . "args" }}
-            args: {{ .args }}
+            args:
+            {{ toYaml .args | indent 2 }}
             {{- end }}
       project: default
       syncPolicy:
