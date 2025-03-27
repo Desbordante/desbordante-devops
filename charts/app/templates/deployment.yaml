@@ -28,7 +28,7 @@ spec:
           command: ["{{ .Values.command }}"]
           {{- end }}
           {{- if .Values.args }}
-          args: {{ toYaml .Values.args | nindent 12 }}
+          args: [{{ range $index, $arg := .Values.args }}{{ if $index }}, {{ end }}"{{ $arg }}"{{ end }}]
           {{- end }}
           env:
           {{- include "helpers.list-env-variables" . | indent 12 }}

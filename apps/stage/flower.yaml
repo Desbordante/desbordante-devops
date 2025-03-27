@@ -4,9 +4,9 @@ image:
 subdomain: flower
 command: celery
 args:
-  - "--broker=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:${RABBITMQ_PORT}//"
+  - "--broker=amqp://$(RABBITMQ_DEFAULT_USER):$(RABBITMQ_DEFAULT_PASS)@$(RABBITMQ_HOST):$(RABBITMQ_PORT)//"
   - "flower"
-  - "--basic_auth=${FLOWER_USER}:${FLOWER_PASSWORD}"
+  - "--basic_auth=$(FLOWER_USER):$(FLOWER_PASSWORD)"
 port: 5555
 env:
   - name: FLOWER_USER
