@@ -2,7 +2,10 @@ image:
   name: mher/flower
   tag: 2.0.1
 command: celery
-args: ["--broker=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:${RABBITMQ_PORT}//", "flower", "--basic_auth=${FLOWER_USER}:${FLOWER_PASSWORD}"]
+args:
+  - "--broker=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:${RABBITMQ_PORT}//"
+  - "flower"
+  - "--basic_auth=${FLOWER_USER}:${FLOWER_PASSWORD}"
 port: 5555
 env:
   - name: FLOWER_USER
