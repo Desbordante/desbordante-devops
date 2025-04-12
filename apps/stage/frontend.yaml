@@ -1,4 +1,9 @@
+autoUpdate: true
 image:
-  name: nginx
-  tag: latest
-port: 80
+  name: ghcr.io/pechenux/desbordante-frontend
+  tag: aec3498
+port: 3000
+env:
+  SERVER_PROTOCOL: https
+  SERVER_IP: api.desbordemo.store
+  SERVER_PORT: 443

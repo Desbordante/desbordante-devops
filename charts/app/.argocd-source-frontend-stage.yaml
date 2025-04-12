@@ -1,0 +1,8 @@
+helm:
+  parameters:
+  - name: image.name
+    value: ghcr.io/pechenux/desbordante-frontend
+    forcestring: true
+  - name: image.tag
+    value: aec3498
+    forcestring: true
