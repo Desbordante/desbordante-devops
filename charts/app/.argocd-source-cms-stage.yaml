@@ -1,0 +1,8 @@
+helm:
+  parameters:
+  - name: image.name
+    value: ghcr.io/pechenux/desbordante-cms
+    forcestring: true
+  - name: image.tag
+    value: 678c207
+    forcestring: true
