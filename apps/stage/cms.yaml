@@ -1,0 +1,36 @@
+autoUpdate: true
+image:
+  name: ghcr.io/pechenux/desbordante-cms
+  tag: 0.1.0
+subdomain: cms
+port: 1337
+env:
+  POSTGRES_USER: postgres
+  POSTGRES_HOST: postgres-stage-service
+  POSTGRES_DB: db
+  POSTGRES_PORT: 5432
+  RABBITMQ_DEFAULT_USER: guest
+  RABBITMQ_HOST: rabbitmq-stage-service
+  RABBITMQ_PORT: 5672
+  MINIO_ROOT_USER: admin
+  MINIO_DEFAULT_BUCKETS: bucket:public
+  MINIO_HOST: minio-stage-service
+  MINIO_PORT: 9000
+
+  NODE_ENV: production
+  DATABASE_CLIENT: postgres
+  DATABASE_HOST: postgres-cms-stage-service
+  DATABASE_PORT: 5432
+  DATABASE_NAME: db
+  DATABASE_USERNAME: postgres
+  JWT_SECRET: tobemodified
+  ADMIN_JWT_SECRET: tobemodified
+  API_TOKEN_SALT: tobemodified
+  APP_KEYS: "toBeModified1,toBeModified2"
+  DOMAIN: cms.desbordemo.store
+secrets:
+  postgres-cms-secret:
+    DATABASE_PASSWORD: password
+volume:
+  mountPath: /cms/public/uploads/
+  storage: 2Gi
