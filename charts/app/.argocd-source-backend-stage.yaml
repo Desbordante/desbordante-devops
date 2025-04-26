@@ -4,5 +4,5 @@ helm:
     value: ghcr.io/desbordante/desbordante-server
     forcestring: true
   - name: image.tag
-    value: 6c562a9
+    value: 2b352c0
     forcestring: true
