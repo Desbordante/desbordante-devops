@@ -4,5 +4,5 @@ helm:
     value: ghcr.io/pechenux/desbordante-cms
     forcestring: true
   - name: image.tag
-    value: fdab9e5
+    value: 0c1bf1b
     forcestring: true
