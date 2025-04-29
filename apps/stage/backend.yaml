@@ -16,7 +16,12 @@ env:
   MINIO_DEFAULT_BUCKETS: bucket:public
   MINIO_HOST: minio-stage-service
   MINIO_PORT: 9000
+  SMTP_HOST: smtp.beget.com
+  SMTP_PORT: 465
+  SMTP_USERNAME: noreply@desbordemo.store
 secrets:
+  smtp-secret:
+    SMTP_PASSWORD: password
   postgres-secret:
     POSTGRES_PASSWORD: password
   rabbitmq-secret:
