@@ -20,5 +20,5 @@ secrets:
   postgres-cms-secret:
     DATABASE_PASSWORD: password
 volume:
-  mountPath: /cms/public/uploads/
+  mountPath: /opt/app/public/uploads
   storage: 2Gi
