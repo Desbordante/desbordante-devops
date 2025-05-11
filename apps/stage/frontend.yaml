@@ -4,6 +4,9 @@ image:
   tag: aec3498
 port: 3000
 env:
+  BACKEND_PROTOCOL: https
+  BACKEND_IP: desbordemo.store
+  BACKEND_PORT: 443
   SERVER_PROTOCOL: https
   SERVER_IP: api.desbordemo.store
   SERVER_PORT: 443
