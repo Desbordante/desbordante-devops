@@ -10,3 +10,5 @@ env:
 secrets:
   minio-secret:
     MINIO_ROOT_PASSWORD: password
+volume:
+  mountPath: /bitnami/minio/data

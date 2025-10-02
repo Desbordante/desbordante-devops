@@ -19,7 +19,9 @@ env:
   MINIO_PORT: 9000
   SMTP_HOST: smtp.beget.com
   SMTP_PORT: 465
-  SMTP_USERNAME: noreply@desbordemo.store
+  SMTP_USERNAME: noreply@desbordemo.ru
+  REDIS_HOST: redis-stage-service
+  REDIS_PORT: 6379
 secrets:
   smtp-secret:
     SMTP_PASSWORD: password

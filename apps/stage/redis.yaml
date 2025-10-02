@@ -1,0 +1,7 @@
+ingress: false
+image:
+  name: redis
+  tag: alpine3.22
+port: 6379
+volume:
+  mountPath: /data
