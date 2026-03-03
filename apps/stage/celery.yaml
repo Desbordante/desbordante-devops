@@ -17,14 +17,16 @@ env:
   MINIO_DEFAULT_BUCKETS: bucket:public
   MINIO_HOST: minio-stage-service
   MINIO_PORT: 9000
-  SMTP_HOST: smtp.beget.com
-  SMTP_PORT: 465
-  SMTP_USERNAME: noreply@desbordemo.ru
   REDIS_HOST: redis-stage-service
   REDIS_PORT: 6379
+  GITHUB_CLIENT_ID: Ov23liczPSk4WhNrJVyX
+  GOOGLE_CLIENT_ID: 749345151028-opub4dgj6c9kb7f9qi9vaiit1vrp1ldk.apps.googleusercontent.com
+  AUTH_SUCCESS_REDIRECT_URL: https://api.desbordemo.ru/docs
 secrets:
-  smtp-secret:
-    SMTP_PASSWORD: password
+  github-secret:
+    GITHUB_CLIENT_SECRET: password
+  google-secret:
+    GOOGLE_CLIENT_SECRET: password
   postgres-secret:
     POSTGRES_PASSWORD: password
   rabbitmq-secret:
